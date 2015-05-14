@@ -5,4 +5,4 @@ mvn package && java -jar -Dspring.profiles.active=production -DredisPassword=xxx
 
 or 
 
-mvn spring-boot:run
+mvn spring-boot:run -Dspring.profiles.active=production -DredisPassword=xxxx 
