@@ -5,6 +5,8 @@ redis:
   host: 127.0.0.1
   password:
   topicName: panda-ws
+logging:
+  file: /comicpanda/logs/app/ws/application.log
 ---
 
 spring:
