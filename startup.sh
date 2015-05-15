@@ -1,6 +1,7 @@
 #!/bin/bash
 JARFile="target/panda-ws-1.0-SNAPSHOT.jar"
 PIDFile="/comicpanda/logs/app/ws/application.pid"
+LogFile="/comicpanda/logs/app/ws/application.log"
 
 function check_if_pid_file_exists {
     if [ ! -f $PIDFile ]
@@ -69,6 +70,14 @@ case "$1" in
     nohup java -jar -Dspring.profiles.active=$2 -DredisPassword=$3 $JARFile >/dev/null 2>&1 &
     echo "$!" > $PIDFile
     echo "Process started"
+
+    tail -n0 -F $LogFile | while read line; do
+        echo $line
+    if echo $line | grep -q 'Started Application'; then
+        pkill -f "tail -n0 -F $LogFile"
+        exit 0
+    fi
+    done
     ;;
   *)
     echo "Usage: $0 {start|stop|status}"
